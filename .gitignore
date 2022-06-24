@@ -1,4 +1,4 @@
 node_modules
 
-data/db
-data/www
+data/db/*
+# data/www/*

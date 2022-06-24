@@ -1,0 +1,42 @@
+version: '2'
+
+services:
+    web:
+        image: lavoweb/php-8.1
+        ports:
+            - "80:80"
+        volumes:
+            - www-data:/var/www/html
+        links:
+            - db:db
+
+    db:
+        image: mysql:latest
+        volumes:
+            - db-data:/var/lib/mysql
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: database
+            MYSQL_USER: user
+            MYSQL_PASSWORD: 123
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - "8080:80"
+        links:
+            - db:db
+
+volumes:
+    www-data:
+        driver_opts:
+            type: none
+            device: "./data/www"
+            o: bind
+    db-data:
+        driver_opts:
+            type: none
+            device: "./data/db"
+            o: bind
